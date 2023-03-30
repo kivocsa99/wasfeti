@@ -42,11 +42,15 @@ class HomeContainer extends HookWidget {
                           children: const [
                             ImageWrapper(
                                 height: 3,
-                                widthdivide: 2.5,
-                                image: "assets/doctors.json"),
+                                widthdivide: 3,
+                                image: "assets/drug.json"),
                             ImageWrapper(
                                 height: 3,
-                                widthdivide: 2.5,
+                                widthdivide: 3,
+                                image: "assets/shield.json"),
+                            ImageWrapper(
+                                height: 3,
+                                widthdivide: 3,
                                 image: "assets/therapy.json"),
                           ],
                         ),
@@ -87,7 +91,7 @@ class HomeContainer extends HookWidget {
                             ImageWrapper(
                                 height: 3,
                                 widthdivide: 2.5,
-                                image: "assets/doctors.json"),
+                                image: "assets/drug.json"),
                             ImageWrapper(
                                 height: 3,
                                 widthdivide: 2.5,

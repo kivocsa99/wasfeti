@@ -1,7 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:wasfeti/firebase_options.dart';
 import 'package:wasfeti/presentation/components/typography.dart';
 import 'package:wasfeti/presentation/widgets/aboutus.dart';
 import 'package:wasfeti/presentation/widgets/homecontainer.dart';
@@ -9,9 +13,13 @@ import 'package:wasfeti/presentation/widgets/mainappbar.dart';
 import 'package:wasfeti/presentation/widgets/mainfeaturescontainer.dart';
 import 'package:wasfeti/presentation/widgets/mainnavigationbar.dart';
 import 'package:wasfeti/presentation/widgets/mainspecialcontainer.dart';
+import 'router/app_route.gr.dart' as app_router;
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Hive.initFlutter();
+  await Hive.openBox("setting");
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -19,7 +27,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    final _appRouter = app_router.AppRouter();
+
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'wasfeti',
       theme: ThemeData(
@@ -38,7 +48,8 @@ class MyApp extends StatelessWidget {
           const ResponsiveBreakpoint.autoScale(2460, name: "4K"),
         ],
       ),
-      home: const MyHomePage(),
+      routerDelegate: _appRouter.delegate(),
+      routeInformationParser: _appRouter.defaultRouteParser(),
     );
   }
 }
